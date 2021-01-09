@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call<Hero?>, response: Response<Hero?>) {
                 val heroList: Hero = response.body() as Hero
                 for (i in heroList.indices) {
-                    println("Herolist ${heroList.get(i).name}")
+                    println("Hero list ${heroList.get(i).name}")
                 }
 
             }
