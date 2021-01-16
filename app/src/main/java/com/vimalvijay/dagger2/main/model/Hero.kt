@@ -1,4 +1,4 @@
-package com.vimalvijay.dagger2.model
+package com.vimalvijay.dagger2.main.model
 
 import com.google.gson.annotations.SerializedName
 

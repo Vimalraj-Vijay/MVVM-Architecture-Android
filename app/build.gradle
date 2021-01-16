@@ -45,8 +45,26 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    //Android Activity ViewModel  -- Generates ViewModels()
+    implementation "androidx.activity:activity-ktx:1.1.0"
+
+    //Recycler View
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
+    //Glide - Load Images
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+
+    //Android LifeCycle
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.2.0"
+
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.7.2'
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.7.2"
+
+    //Rx Java
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.18'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
     //OkHttp Client and Logger
     implementation "com.squareup.okhttp3:okhttp:3.14.7"
@@ -59,5 +77,9 @@ dependencies {
     //Dagger Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    // View Model For Hilt
+    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha02'
+    kapt 'androidx.hilt:hilt-compiler:1.0.0-alpha02'
 
 }
