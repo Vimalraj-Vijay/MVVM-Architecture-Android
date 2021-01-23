@@ -5,18 +5,31 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.vimalvijay.dagger2.main.model.Hero
 import com.vimalvijay.dagger2.main.repository.MainRepository
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 class MainViewModel @ViewModelInject constructor(private var mainRepository: MainRepository) :
     ViewModel() {
 
-    var heroList: MutableLiveData<Hero> = MutableLiveData()
+    private val parentJob = Job()
 
-    fun getHerosRepository(): MutableLiveData<Hero> {
-        heroList = loadHerosList()
-        return heroList
+    private val coroutineContext: CoroutineContext
+        get() = parentJob + Dispatchers.Default
+
+    private val scope = CoroutineScope(coroutineContext)
+
+    val heroListLiveData = MutableLiveData<MutableList<Hero.HeroItem>>()
+
+    /**
+     * Launch API using Coroutines
+     */
+    fun fetchHerosList() {
+        scope.launch {
+            heroListLiveData.postValue(mainRepository.getHerosList())
+        }
     }
 
-    private fun loadHerosList(): MutableLiveData<Hero> {
-        return mainRepository.getHeroListCall()
+    fun cancelAllRequest() {
+        coroutineContext.cancel()
     }
 }
