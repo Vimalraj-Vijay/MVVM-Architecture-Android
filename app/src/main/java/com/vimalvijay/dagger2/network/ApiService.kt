@@ -8,6 +8,6 @@ import retrofit2.http.GET
 interface ApiService {
 
     @GET("marvel")
-    fun getHeroes(): Deferred<Response<Hero>>
+   suspend fun getHeroes(): Response<Hero>
 
 }

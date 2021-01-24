@@ -14,8 +14,8 @@ class MainRepository @Inject constructor(var apiService: ApiService) : BaseRepos
     suspend fun getHerosList(): MutableList<Hero.HeroItem>? {
 
         val heroResponse = safeApiRequest(
-            call = { apiService.getHeroes().await() },
-            errorMessage = "Error On" + Thread.currentThread().stackTrace[1].methodName
+            call = { apiService.getHeroes() },errorMessage = "Error On" + Thread.currentThread().stackTrace[1].methodName
+
         )
         return heroResponse?.toMutableList()
     }
