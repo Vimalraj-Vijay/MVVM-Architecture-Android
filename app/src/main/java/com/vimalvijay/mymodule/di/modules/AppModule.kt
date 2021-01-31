@@ -1,9 +1,12 @@
-package com.vimalvijay.dagger2.di.modules
+package com.vimalvijay.mymodule.di.modules
 
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.vimalvijay.dagger2.BuildConfig
-import com.vimalvijay.dagger2.network.ApiConstants
-import com.vimalvijay.dagger2.network.ApiService
+import com.vimalvijay.mymodule.BuildConfig
+import com.vimalvijay.mymodule.commonutils.CustomProgressbar
+import com.vimalvijay.mymodule.network.ApiConstants
+import com.vimalvijay.mymodule.network.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,6 +42,7 @@ class AppModule {
         .Builder()
         .build()
 
+
     /**
      * Init Retrofit Client for Network
      */
@@ -46,7 +50,13 @@ class AppModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient, BASE_URL: String): Retrofit =
         Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(
+                GsonConverterFactory.create(
+                    GsonBuilder().setLenient()
+                        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                        .create()
+                )
+            )
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .baseUrl(BASE_URL)
             .client(okHttpClient)
@@ -58,4 +68,13 @@ class AppModule {
     @Provides
     @Singleton
     fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
+
+
+    /**
+     * Custom Progress Bar
+     */
+    @Provides
+    fun provideCustomProgressBar(): CustomProgressbar {
+        return CustomProgressbar()
+    }
 }

@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.vimalvijay.dagger2">
+    package="com.vimalvijay.mymodule">
+
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
     <application
-        android:name=".di.ApplicationController"
+        android:name="com.vimalvijay.mymodule.di.ApplicationController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Dagger2">
-        <activity android:name=".main.ui.MainActivity">
+        android:theme="@style/AppTheme">
+        <activity android:name="com.vimalvijay.mymodule.main.ui.MainActivity"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,4 +1,4 @@
-package com.vimalvijay.dagger2
+package com.vimalvijay.mymodule
 
 import org.junit.Test
 

@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "Dagger2"
+rootProject.name = "MyModule"

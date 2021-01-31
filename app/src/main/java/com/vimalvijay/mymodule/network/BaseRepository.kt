@@ -1,4 +1,4 @@
-package com.vimalvijay.dagger2.network
+package com.vimalvijay.mymodule.network
 
 import android.util.Log
 import retrofit2.Response

@@ -1,4 +1,4 @@
-package com.vimalvijay.dagger2.network
+package com.vimalvijay.mymodule.network
 
 sealed class NetworkResultHandler<out T : Any> {
     data class OnSuccessResponse<out T : Any>(val response: T) : NetworkResultHandler<T>()

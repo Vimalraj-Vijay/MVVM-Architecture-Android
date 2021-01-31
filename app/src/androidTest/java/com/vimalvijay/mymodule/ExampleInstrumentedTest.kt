@@ -1,4 +1,4 @@
-package com.vimalvijay.dagger2
+package com.vimalvijay.mymodule
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

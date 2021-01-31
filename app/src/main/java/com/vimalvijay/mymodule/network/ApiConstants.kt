@@ -1,4 +1,4 @@
-package com.vimalvijay.dagger2.network
+package com.vimalvijay.mymodule.network
 
 object ApiConstants {
     const val BASE_URL = "https://simplifiedcoding.net/demos/"

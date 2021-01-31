@@ -1,8 +1,8 @@
-package com.vimalvijay.dagger2.main.repository
+package com.vimalvijay.mymodule.main.repository
 
-import com.vimalvijay.dagger2.main.model.Hero
-import com.vimalvijay.dagger2.network.ApiService
-import com.vimalvijay.dagger2.network.BaseRepository
+import com.vimalvijay.mymodule.main.model.Hero
+import com.vimalvijay.mymodule.network.ApiService
+import com.vimalvijay.mymodule.network.BaseRepository
 import javax.inject.Inject
 
 
