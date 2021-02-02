@@ -1,16 +1,19 @@
 package com.vimalvijay.mymodule.di.modules
 
+import android.content.Context
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.vimalvijay.mymodule.BuildConfig
 import com.vimalvijay.mymodule.commonutils.CustomProgressbar
-import com.vimalvijay.mymodule.network.ApiConstants
-import com.vimalvijay.mymodule.network.ApiService
+import com.vimalvijay.mymodule.network.api.ApiConstants
+import com.vimalvijay.mymodule.network.api.ApiService
+import com.vimalvijay.mymodule.network.interceptors.LoggingInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -32,15 +35,17 @@ class AppModule {
      */
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient = if (BuildConfig.DEBUG) {
+    fun provideOkHttpClient(@ApplicationContext context: Context): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
-            .build()
-    } else OkHttpClient
-        .Builder()
-        .build()
+        val okHttpClient = OkHttpClient.Builder()
+        if (BuildConfig.DEBUG) {
+            okHttpClient.addInterceptor(loggingInterceptor)
+        }
+        // okHttpClient.addInterceptor(ErrorInterceptor(context))
+        okHttpClient.addInterceptor(LoggingInterceptor(context))
+        return okHttpClient.build()
+    }
 
 
     /**
@@ -67,7 +72,9 @@ class AppModule {
      */
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
+    fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(
+        ApiService::class.java
+    )
 
 
     /**

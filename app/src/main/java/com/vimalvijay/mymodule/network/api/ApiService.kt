@@ -1,4 +1,4 @@
-package com.vimalvijay.mymodule.network
+package com.vimalvijay.mymodule.network.api
 
 import com.vimalvijay.mymodule.main.model.Hero
 import kotlinx.coroutines.Deferred

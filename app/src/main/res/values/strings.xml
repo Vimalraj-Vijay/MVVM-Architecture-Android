@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">MyModule</string>
     <string name="loading">Loading.. Please wait</string>
+
+    <string name="error_timeout">No network connection</string>
+    <string name="error_no_connection">Unable to make a connection. Please check your internet or Host url</string>
+    <string name="error_shutdown_connection">Connection shutdown. Please check your internet</string>
+    <string name="error_bad_request">Bad Request..</string>
+    <string name="error_unauthorizedError">Unauthorized..</string>
+    <string name="error_ForBidden">ForBidden..</string>
+    <string name="error_not_found">Not Found..</string>
+    <string name="error_internal_server">Internal Server Error</string>
+
 </resources>
