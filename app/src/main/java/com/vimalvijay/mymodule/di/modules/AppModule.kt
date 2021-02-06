@@ -1,19 +1,24 @@
 package com.vimalvijay.mymodule.di.modules
 
+import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.vimalvijay.mymodule.BuildConfig
+import com.vimalvijay.mymodule.R
 import com.vimalvijay.mymodule.commonutils.CustomProgressbar
+import com.vimalvijay.mymodule.commonutils.SessionDataManager
 import com.vimalvijay.mymodule.network.api.ApiConstants
 import com.vimalvijay.mymodule.network.api.ApiService
+import com.vimalvijay.mymodule.network.interceptors.AuthInterceptor
 import com.vimalvijay.mymodule.network.interceptors.LoggingInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -22,7 +27,7 @@ import javax.inject.Singleton
 
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 class AppModule {
     /**
      * Application's Base URL
@@ -35,15 +40,16 @@ class AppModule {
      */
     @Provides
     @Singleton
-    fun provideOkHttpClient(@ApplicationContext context: Context): OkHttpClient {
+    fun provideOkHttpClient(@ApplicationContext context: Context,sessionDataManager: SessionDataManager): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.HEADERS
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         val okHttpClient = OkHttpClient.Builder()
+        okHttpClient.addInterceptor(AuthInterceptor(sessionDataManager))
+        okHttpClient.addInterceptor(LoggingInterceptor(context))
         if (BuildConfig.DEBUG) {
             okHttpClient.addInterceptor(loggingInterceptor)
         }
-        // okHttpClient.addInterceptor(ErrorInterceptor(context))
-        okHttpClient.addInterceptor(LoggingInterceptor(context))
         return okHttpClient.build()
     }
 
@@ -81,7 +87,18 @@ class AppModule {
      * Custom Progress Bar
      */
     @Provides
+    @Singleton
     fun provideCustomProgressBar(): CustomProgressbar {
         return CustomProgressbar()
     }
+
+    /**
+     * SessionDataManager
+     */
+    @Provides
+    @Singleton
+    fun provideSessionManager(application: Application): SessionDataManager {
+        return SessionDataManager(application.getSharedPreferences(application.resources.getString(R.string.app_name), Context.MODE_PRIVATE))
+    }
+
 }
