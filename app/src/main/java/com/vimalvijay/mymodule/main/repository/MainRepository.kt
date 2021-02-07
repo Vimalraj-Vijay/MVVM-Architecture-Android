@@ -12,7 +12,6 @@ class MainRepository @Inject constructor(var apiService: ApiService) : BaseRepos
      * Get Hero List from Api
      */
     suspend fun getHerosList(): MutableList<Hero.HeroItem>? {
-
         val heroResponse = safeApiRequest(
             call = { apiService.getHeroes().await() })
         return heroResponse?.toMutableList()
